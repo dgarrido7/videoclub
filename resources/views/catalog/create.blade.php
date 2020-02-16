@@ -32,8 +32,21 @@
             <div class="form-group">
             <label for="title">Poster</label>
                <input type="text" name="img" class="form-control">
-			
-			</div>
+			   </div>
+
+            <div class="form-group">
+            <label for="category">Categoria</label>
+               <select class="form-control" style="height:40px" id="category" name="category">
+                  @foreach( $categoria as $categoria )
+                  <option value="{{$categoria->id}}">{{$categoria->title}}</option>
+                  @endforeach
+               </select>
+            </div>
+
+            <div class="form-group">
+            <label for="trailer">Trailer</label>
+                  <input type="text" name="trailer" class="form-control">
+            </div>
 
             <div class="form-group">
                <label for="synopsis">Resumen</label>

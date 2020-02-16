@@ -36,6 +36,24 @@
 			
 			</div>
 
+         <div class="form-group">
+            <label for="categorya">Categoria</label>
+               <select class="form-control" style="height:40px" id="category" name="category">
+                  @foreach( $categoria as $categoria)
+                     @if($categoria->id==$pelicula->category_id)
+                     <option value="{{$categoria->id}}" selected>{{$categoria->title}}</option>
+                     @else
+                     <option value="{{$categoria->id}}">{{$categoria->title}}</option>
+                     @endif                  
+                  @endforeach
+               </select>
+            </div>
+
+            <div class="form-group">
+            <label for="trailer">Trailer</label>
+                  <input type="text" name="trailer" class="form-control" value="{{$pelicula->trailer}}">
+            </div>
+
             <div class="form-group">
                <label for="synopsis">Resumen</label>
                <textarea name="synopsis" id="synopsis" class="form-control" rows="3">{{$pelicula->synopsis}}</textarea>

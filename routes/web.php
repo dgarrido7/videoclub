@@ -140,4 +140,13 @@ Route::put('/catalog/return/{id}', 'CatalogController@putReturn')->middleware('a
 Route::put('/catalog/delete()/{id}', 'CatalogController@deleteMovie')->middleware('auth');
 
 
+//EX FINAL
+Route::post('/review/create/{id}', 'CatalogController@postReviewCreate')->middleware('auth');
+Route::resource('/category','CategoryController')->middleware('auth');
+Route::get('/catalog', 'CatalogController@searchDash')->middleware('auth');
+Route::put('/catalog/fav/{id}', 'CatalogController@putFav')->middleware('auth');
+Route::get('/favs', 'CatalogController@showFav')->middleware('auth');
+Route::get('/best', 'CatalogController@showBest')->middleware('auth');
+
+
 

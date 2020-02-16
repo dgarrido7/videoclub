@@ -2,8 +2,14 @@
     namespace App\Http\Controllers;
 
     use App\Http\Controllers\CatalogController;
+    use Illuminate\Support\Facades\Auth;
 	use App\movies;
+	use App\Review;
 	use Illuminate\Http\Request;
+	use App\Fav;
+	use App\Picture;
+	use App\User;
+	use App\Category;
 	use Notify;
 
     class CatalogController extends Controller
@@ -12,12 +18,15 @@
 
 		public function getShow($id)
 			{
-    			return view('catalog.show', array('arrayPeliculas'=>movies::findOrFail($id)));
+
+    			return view('catalog.show', array('arrayPeliculas'=>movies::findOrFail($id),
+    				'arrayReviews'=>$results=Review::where('movie_id', $id)->orderBy('created_at', 'desc')->take(3)->get())
+    						);
 			}
 
 		public function getEdit($id)
 			{
-    			return view('catalog.edit', array('id'=>movies::findOrFail($id),'pelicula'=>movies::findOrFail($id)));
+    			return view('catalog.edit', array('id'=>movies::findOrFail($id),'pelicula'=>movies::findOrFail($id),'categoria'=>Category::all()));
 			}
 		public function getIndex()
 			{
@@ -25,7 +34,8 @@
 			}
 		public function getCreate()
 			{
-    			return view('catalog.create');
+
+    			return view('catalog.create',array('categoria'=>Category::all()));
 			}
 
 		public function postCreate(Request $request)
@@ -35,6 +45,8 @@
 				$p->year = $request->input('year');
 				$p->director = $request->input('director');
 				$p->poster = $request->input('img');
+				$p->category_id=$request->input('category');
+				$p->trailer=$request->input('trailer');
 				$p->synopsis = $request->input('synopsis');
 				$p->save();
 
@@ -53,6 +65,8 @@
 				$p->year = $request->input('year');
 				$p->director = $request->input('director');
 				$p->poster = $request->input('img');
+				$p->category_id=$request->input('category');
+				$p->trailer=$request->input('trailer');
 				$p->synopsis = $request->input('synopsis');
 				$p->save();
 
@@ -88,6 +102,57 @@
     			return redirect('catalog/show/'.$id);
 			}
 
+		public function putFav($id)
+			{
+
+
+				$p = new Fav;
+				$p = Fav::where('user_id', Auth::id())->where('movies_id', $id)->first();
+
+				if ($p!=null) {
+					$p->delete();
+					Notify::success('Pelicula quitada de Favoritos');
+				}
+
+				else{
+				$p = new Fav;
+				$p->user_id = Auth::id();
+				$p->movies_id = $id;
+				$p->save();
+				Notify::success('Pelicula añadida a Favoritos');
+				}
+
+
+
+    			
+    			return redirect('catalog/show/'.$id);
+
+			}
+
+
+		public function showFav()
+			{
+
+			$arrayPeliculas = Fav::with(['user','movies'])->where('user_id',Auth::id())->get();
+
+    			return view('catalog.favs', compact('arrayPeliculas'));
+
+
+			}
+
+		public function showBest()
+			{
+
+
+			$arrayPeliculas = Review::with(['user','movies'])->groupBy( 'movie.id' )->get();
+
+			dd($arrayPeliculas);
+			die();
+    			return view('catalog.best', compact('arrayPeliculas'));
+
+
+			}
+
 
 		public function deleteMovie($id)
 			{
@@ -99,6 +164,27 @@
 				Notify::success('Pelicula eliminada correctament');
     			return redirect('/catalog');
 			}
+
+			public function postReviewCreate(Request $request,$id){
+				$r = new Review;
+				$r->title = $request->input('title');
+				$r->review = $request->input('review');
+				$r->stars = $request->input('stars');
+				$r->user_id = Auth::id();
+				$r->movie_id = $id;
+				$r->save();
+
+				Notify::success('Comentari creat correctament');
+
+    			return redirect('/catalog');
+			}
+
+			public function searchDash(Request $request){
+			        $buscar = $request->input('buscar');
+
+			        $arrayPeliculas = movies::where('title', 'LIKE', '%' . $buscar . '%')->get();
+			        return view('catalog.index',compact('arrayPeliculas'));
+			    }
 
     }
 ?>

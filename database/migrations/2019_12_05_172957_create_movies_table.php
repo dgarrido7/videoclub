@@ -19,9 +19,13 @@ class CreateMoviesTable extends Migration
             $table->string('year',8);
             $table->string('director',64);
             $table->string('poster');
+            $table->string('trailer');
             $table->boolean('rented')->default(false);
             $table->text('synopsis');
+            $table->unsignedBigInteger('category_id');
             $table->timestamps();
+
+             $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');
         });
     }
 

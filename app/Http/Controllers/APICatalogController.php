@@ -57,10 +57,18 @@ class APICatalogController extends Controller
                    $p->synopsis = $request->input('synopsis');
                    $count++;
                 }
-
-                if ($count==5) {
+                if ($request->has('category_id')) {
+                  $p->category_id = request('category_id');
+                  $count++;
+               }
+               if ($request->has('trailer')) {
+                  $p->trailer = request('trailer');
+                  $count++;
+               }
+                if ($count==7) {
                    $p->save();
                 }
+                
 
                 return response()->json( ['error' => false,
                           'msg' => 'La película se ha almacenado correctamente' ] );

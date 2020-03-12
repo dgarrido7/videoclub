@@ -16,22 +16,22 @@
 
             <div class="form-group">
                <label for="title">Título</label>
-               <input type="text" name="title" id="title" class="form-control">
+               <input type="text" name="title" id="title" class="form-control" required>
             </div>
 
             <div class="form-group">
             	<label for="title">Año</label>
-               <input type="text" name="year" id="year" class="form-control">
+               <input type="text" name="year" id="year" class="form-control" required>
             </div>
 
             <div class="form-group">
             <label for="title">Director</label>
-               <input type="text" name="director" id="director" class="form-control">
+               <input type="text" name="director" id="director" class="form-control" required>
             </div>
 
             <div class="form-group">
             <label for="title">Poster</label>
-               <input type="text" name="img" class="form-control">
+               <input type="text" name="img" class="form-control" required>
 			   </div>
 
             <div class="form-group">
@@ -45,12 +45,12 @@
 
             <div class="form-group">
             <label for="trailer">Trailer</label>
-                  <input type="text" name="trailer" class="form-control">
+                  <input type="text" name="trailer" class="form-control" required>
             </div>
 
             <div class="form-group">
                <label for="synopsis">Resumen</label>
-               <textarea name="synopsis" id="synopsis" class="form-control" rows="3"></textarea>
+               <textarea name="synopsis" id="synopsis" class="form-control" rows="3" required></textarea>
             </div>
 
             <div class="form-group text-center">

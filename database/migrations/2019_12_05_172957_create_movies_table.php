@@ -15,14 +15,14 @@ class CreateMoviesTable extends Migration
     {
         Schema::create('movies', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('title');
-            $table->string('year',8);
-            $table->string('director',64);
-            $table->string('poster');
-            $table->string('trailer');
+            $table->string('title')->nullable();
+            $table->string('year',8)->nullable();
+            $table->string('director',64)->nullable();
+            $table->string('poster')->nullable();
+            $table->string('trailer')->nullable();
             $table->boolean('rented')->default(false);
-            $table->text('synopsis');
-            $table->unsignedBigInteger('category_id');
+            $table->text('synopsis')->nullable();
+            $table->unsignedBigInteger('category_id')->default(1);
             $table->timestamps();
 
              $table->foreign('category_id')->references('id')->on('categories')->onUpdate('cascade');

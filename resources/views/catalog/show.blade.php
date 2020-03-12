@@ -172,10 +172,10 @@
 					<form action="{{action('CatalogController@postReviewCreate', $arrayPeliculas->id)}}" method="POST" style="display:inline">
 						@csrf
 					<label>Enviar Comentari</label>
-						<input class="form-control" type="text" name="title" placeholder="Resum Comentari">
+						<input class="form-control" type="text" name="title" placeholder="Resum Comentari" required>
 					<br>
 					<label>Valoració</label>
-						<select class="form-control" name="stars" style="height: calc(3.25rem + 2px)">
+						<select class="form-control" name="stars" style="height: calc(3.25rem + 2px)" required>
 						  <option value="1">1</option>
 						  <option value="2">2</option>
 						  <option value="3">3</option>
@@ -183,7 +183,7 @@
 						  <option value="5">5</option>
 						</select>
 					<br>
-                    <textarea class="form-control" name="review" placeholder="Escriu un Comentari..." rows="3"></textarea>
+                    <textarea class="form-control" name="review" placeholder="Escriu un Comentari..." rows="3" required></textarea>
                     <br>
                     <button type="submit" class="btn btn-info pull-right">Comenta</button>
                     </form>
